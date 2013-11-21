@@ -1,4 +1,5 @@
 SoftwareEng
 ===========
+Mancala
 
 CourseProject
