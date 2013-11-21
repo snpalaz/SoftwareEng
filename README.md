@@ -1,5 +1,5 @@
 SoftwareEng
 ===========
-Mancala
+Mancala Projesi
 
 CourseProject
