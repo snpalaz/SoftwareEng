@@ -1,4 +1,4 @@
-SoftwareEng---CourseProject
+CourseProject
 ===========Minimax ve Alpha Beta Pruning algoritmaları===============
 Mancala Projesi Tanımı:
 
@@ -29,3 +29,26 @@ seti biter. Oyunda kendi bölgesinde taşlarını ilk bitiren oyuncu, rakibinin
 bölgesinde bulunan tüm taşları da kazanır.
 
 
+Mancala Rules 
+Each player has six small cups (the ones closest to that player) 
+and the mancala (large cup) to the right. 
+ 
+Begin the game with four seeds in each of the twelve small 
+cups. Each player always picks up seeds from one of the six 
+cups on his/her side. Seeds are dropped into the mancalas but 
+never taken out. 
+ 
+Player A picks up all of the seeds in one of his/her small cups 
+and puts one seed in each cup, starting in the next cup to the 
+right, until the seeds are gone. If there are enough to reach 
+Player A's mancala, one seed gets dropped in. Player A does 
+not put a seed into Player B's mancala. 
+ 
+If Player A's last seed goes into Player A's mancala then Player 
+A gets another turn. If the last seed goes into an empty hole on 
+Player A's side of the board then Player A puts that seed plus 
+any seeds in the hole opposite this one into his/her mancala. 
+ 
+When one player runs out of seeds the game ends. The other 
+player puts all the remaining seeds into his/her mancala. The 
+player with the most seeds in the mancala wins. 
