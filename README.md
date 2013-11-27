@@ -1,5 +1,6 @@
 CourseProject
 ===========Minimax ve Alpha Beta Pruning algoritmaları===============
+
 Mancala Projesi Tanımı:
 
 Mancala Türk Zeka ve Strateji Oyunu iki kişi ile oynanır. 
@@ -30,6 +31,7 @@ bölgesinde bulunan tüm taşları da kazanır.
 
 
 Mancala Rules 
+
 Each player has six small cups (the ones closest to that player) 
 and the mancala (large cup) to the right. 
  
