@@ -22,3 +22,30 @@ public class StatsActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_mancala_stats);
 		
+		final Button btnSettings = (Button)findViewById(R.id.btnGameOptionsInStats);
+		final Button btnHome = (Button)findViewById(R.id.btnHomeInStats);
+		
+		btnSettings.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent gameOptions = new Intent(StatsActivity.this,
+						GameOptionsActivity.class);
+				startActivity(gameOptions);
+				StatsActivity.this.finish();
+			}
+		});
+		
+		btnHome.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+//				Intent gameOptions = new Intent(StatsActivity.this,
+//						GameOptionsActivity.class);
+//				startActivity(gameOptions);
+				StatsActivity.this.finish();
+				
+			}
+		});
+	}
+
