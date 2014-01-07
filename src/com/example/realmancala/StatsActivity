@@ -80,3 +80,17 @@ public class StatsActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK)// donanımsal olarak geri butonuna
+		// basılırsa
+		{
+
+			
+			return true;
+		}
+		return false;
+	}
+}
+
