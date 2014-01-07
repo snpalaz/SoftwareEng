@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Real Mancala</string>
+    <string name="action_settings">Settings</string>
+    <string name="ilk_ekran_logo">Logo</string>
+    <string name="gameoptions_logo">Game Options</string>
+
+</resources>

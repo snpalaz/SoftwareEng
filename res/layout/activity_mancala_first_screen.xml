@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".FirstScreenActivity" 
+    android:background="@drawable/background"
+    android:tileMode="repeat">
+
+    <Button
+        android:id="@+id/btnStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnHowTo"
+        android:layout_alignBottom="@+id/btnHowTo"
+        android:layout_toLeftOf="@+id/btnHowTo" 
+        android:background="@drawable/btn_stats_states"
+        android:onClick="startActivityStats"/>
+
+    <ImageView
+        android:contentDescription="@string/ilk_ekran_logo"
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/logo_rm" />
+
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnStats"
+        android:layout_alignBottom="@+id/btnStats"
+        android:layout_alignLeft="@+id/btnHH"
+        android:background="@drawable/btn_settings_states" 
+        android:onClick="startActivityGameOptions"/>
+
+    <Button
+        android:id="@+id/btnHowTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignRight="@+id/btnHH"
+        android:background="@drawable/btn_howto_states" 
+        android:onClick="startActivityHowTo"/>
+
+    <Button
+        android:id="@+id/btnHH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnCH"
+        android:layout_centerVertical="true"
+        android:background="@drawable/btn_hh_states" 
+        android:onClick="startActivityPlayGame"/>
+
+    <Button
+        android:id="@+id/btnCH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:background="@drawable/btn_ch_states" 
+        android:onClick="startActivityPlayGame"/>
+
+</RelativeLayout>
