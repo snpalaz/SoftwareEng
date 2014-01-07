@@ -1,0 +1,487 @@
+package ai;
+
+import java.util.*;
+
+//---------------------------------------------------------------
+// Class: P1AI
+// Amaç: Bu sınıf bütün ihtimallerin tutulduğu ve arama yöntemlerinin
+// uygulanarak doğru hareketin karar verildiği sınıftır
+//---------------------------------------------------------------
+public class P1AI {
+    //değişkenler
+    private int searchDepth;
+    public boolean[] heuristics = new boolean[6];
+    public P1AI() { }
+    
+    // -------------------------------------------------------------------
+    // Method: AI
+    // Değişkenleri: int heuristics[], kullanacağımız heuristiclerin tutulduğu liste
+    // Dönüş Değeri: Yok
+    // Amaç: Heuristik yapısını oluşturmak
+    // -------------------------------------------------------------------
+    public P1AI(boolean[] h, int depth)
+    {
+        // P1AI için değişkenler
+        heuristics[0] = h[0];
+        heuristics[1] = h[1];
+        heuristics[2] = h[2];
+        heuristics[3] = h[3];
+        heuristics[4] = h[4];
+        heuristics[5] = h[5];
+        searchDepth = depth;
+    }
+    
+    // -------------------------------------------------------------------
+    // Method: Reset
+    // Değişkenleri: int heuristics[], kullanılan heuristiclerin tutulduğu liste
+    // Dönüş Değeri: Yok
+    // Amaç: Heuristik yapısını oluşturmak 
+    // -------------------------------------------------------------------
+    public void reset(boolean[] h, int depth)
+    {
+        // P1AI için değişkenler
+        heuristics[0] = h[0];
+        heuristics[1] = h[1];
+        heuristics[2] = h[2];
+        heuristics[3] = h[3];
+        heuristics[4] = h[4];
+        heuristics[5] = h[5];
+        searchDepth = depth;
+    }
+    
+    //------------------------------------------------------------------------------------------
+    // Fonksiyonu: Rakibimle aramda ne kadar fark var
+    // Amaç: Kendi kalemdeki taşlar - rakibin kalesindeki taşlar.Yüksek değerler bizim için iyi
+    //	
+    //------------------------------------------------------------------------------------------
+    public int H1(CBoard theboard)
+    {
+        // Return (kendi kalemdeki taşlar - rakibin kalesindeki taşlar)
+        return (theboard.gameBoard[CBoard.indexP1Home] - theboard.gameBoard[CBoard.indexP2Home]);
+    }
+
+
+    //------------------------------------------------------------------------------------------
+    // Fonksiyonu: Kazanmaya ne kadar yakınım
+    // Amaç: 1 + oyundaki toplam taşların yarısı .  Yüksek değerler bizim için iyi
+    //------------------------------------------------------------------------------------------
+    public int H2(CBoard theboard)
+    {
+        // Return (bütün taşların sayısı - kazanmayı garantilememiz için kaç tane taş lazım )
+        int half = CBoard.TotalStones / 2;
+        return (CBoard.TotalStones - (half + 1 - theboard.gameBoard[CBoard.indexP1Home]));
+    }
+    
+    //------------------------------------------------------------------------------------------
+    // Fonksiyonu: Rakibim kazanmaya ne kadar yakın (ne kadar taşa ihtiyacı var )
+    // Amaç: 1 + oyundaki toplam taşların yarısı .  Yüksek değerler bizim için iyi
+    //------------------------------------------------------------------------------------------
+    public int H3(CBoard theboard)
+    {
+        // Return (how many opponent needs to guarantee win)
+        int half = CBoard.TotalStones / 2;
+        return (half + 1 - theboard.gameBoard[CBoard.indexP2Home]);
+    }
+
+
+    //------------------------------------------------------------------------------------------
+    // Fonksiyonu: Kaleme yakın taşların sayısı
+    // Amaç: Oyuncunun kalesine 1/3 oranında yakın çukurlardaki taşların sayısı toplamı
+    //------------------------------------------------------------------------------------------
+    public int H4(CBoard theboard)
+    {
+        // Bakılacak çukur sayısı
+        int num = CBoard.holes / 3;
+
+        // 1/3 oranındaki yakın çukurlardaki taşları topla
+        int sum = 0;
+        for (int i = 0; i < num; i++)
+            sum += theboard.gameBoard[(CBoard.indexP1Home - 1) - i];
+
+        // Toplamı gönder
+        return sum;
+    }
+    
+    //------------------------------------------------------------------------------------------
+    // Fonksiyonu: Kaleme uzak taş sayısı
+    // Amaç: Kalemden en uzak 1/3 oranındaki uzak çukurlardaki taşların sayısını topla
+    //------------------------------------------------------------------------------------------
+    public int H5(CBoard theboard)
+    {
+        //bakacağım çukur sayısı
+        int num = CBoard.holes / 3;
+
+        //uzak çukurlardaki taşların toplanması
+        int sum = 0;
+        for (int i = 0; i < num; i++)
+            sum += theboard.gameBoard[i];
+
+        //toplamı gönder
+        return sum;
+    }
+
+
+    //------------------------------------------------------------------------------------------
+    // Fonksiyonu: Oyunun ortasındaki taşların sayısı (ne uzak ne yakın)
+    // Amaç: Oyunda bana 1/3 oranındaki orta uzaklıktaki çukurlardaki taşların sayıları toplamı
+    //------------------------------------------------------------------------------------------
+    public int H6(CBoard theboard)
+    {
+        //bakılacak çukur sayısı
+        int num = CBoard.holes / 3;
+
+        //orta uzaklıktaki çukurdaki taşların toplanması
+        int sum = 0;
+        for (int i = 0; i < num; i++)
+            sum += theboard.gameBoard[num + i];
+
+        //toplamı gönder
+        return sum;
+    }
+    
+  //------------------------------------------------------------------------------------------
+    // Class: P1AI
+    // Fonksiyonu: Seçili heuristiclere göre durumun değerinin bulunması
+    // Amaç: Bu fonksiyon ile birden fazla heuristic değerini hesaplanabiliyor
+    //------------------------------------------------------------------------------------------
+    public int getTotalUtility(CBoard theboard)
+    {
+        //toplamı sıfıra eşitle
+        int sum = 0;
+
+        //eğer seçili ise heuristic değerini toplam değerine ekle
+        if (heuristics[0])
+            sum += H1(theboard);
+        if (heuristics[1])
+            sum += H2(theboard);
+        if (heuristics[2])
+            sum += H3(theboard);
+        if (heuristics[3])
+            sum += H4(theboard);
+        if (heuristics[4])
+            sum += H5(theboard);
+        if (heuristics[5])
+            sum += H6(theboard);
+
+        //eğer bütün heuristicler seçilmemişse ilk geçerli çukuru seçecektir çünkü 0 değeri döner
+
+        //toplamı gönder
+        return sum;
+    }
+
+
+    // -------------------------------------------------------------------
+    // Method: getMove
+    // Değişkenleri: CBoard board, oyunun şu anki durumunun bir kopyası
+    // Dönüş Değeri: oynanacak çukur numarası
+    // Amaç: bütün olasılıkları dolaş ve en iyisini seç
+    // -------------------------------------------------------------------
+    public int getMove(CBoard boardd)
+    {
+    	
+        //arama ağacının rootunu oluştur
+    	//CBoard.Node root = new CBoard().new Node();
+    	Node root = new Node();
+        //root değerini ata
+        boardd.MakeCopyIn(root.board);//root.board null geliyo
+        root.evalFunc = 0;
+        root.minimaxMove = 0;
+        root.nodeDepth = 0;
+
+        //minimaxDecision fonksiyonunu root için çağır
+        return minimaxDecision(root);
+    }
+    
+ // -------------------------------------------------------------------
+    // Fonksiyonu: minimaxDecision
+    // Değişkenleri: Node root, şu anki durumun root nodeu
+    // Dönüş Değeri: oynanacak çukur numarası
+    // Amaç: bütün olasılıkları dolaş ve en iyisini seç
+    // -------------------------------------------------------------------
+    public int minimaxDecision(Node currentState)
+    {
+        //karşılaştırma bittikten sonra globalVar değeri oynanacak doğru hareketi tutacaktır.
+        int binMove = 0;
+        int value = -10000;
+
+        //oynanabilecek en iyi değeri ara
+        Queue<Node> firstMoveQueue = new LinkedList<Node>();
+        firstMoveQueue = expandState(currentState);
+
+        //genişletilmiş durumlardaki değerlere bak
+        while (firstMoveQueue.size() != 0)
+        {
+
+            // yapılacak hamle oyuncuyu tekrar hamle yapmasını sağlıyorsa
+            // tekrar oynayacakmış gibi hesapla
+            if (currentState.board.Status == firstMoveQueue.peek().board.Status)
+            {
+                //eğer bulunan değer şimdikinden büyükse değiştir
+                int utility = maxValue(firstMoveQueue.peek(), -10000, 10000);
+                if (value < utility)
+                {
+                    value = utility;
+                    binMove = firstMoveQueue.peek().minimaxMove;
+                }
+            }
+
+            //diğer oyuncunun oyununu hesapla
+            else
+            {
+                //eğer bulunan değer şimdikinden büyükse değiştir
+                int utility = minValue(firstMoveQueue.peek(), -10000, 10000);
+                if (value < utility)
+                {
+                    value = utility;
+                    binMove = firstMoveQueue.peek().minimaxMove;
+                }
+            }
+
+            //nodeu sıradan çıkar
+            firstMoveQueue.poll();
+        }
+
+        return binMove;
+    }
+    
+ // -------------------------------------------------------------------
+    // Fonksiyonu: maxValue
+    // Değişkenleri: Node state, oyunun şu anki durumu
+    // Dönüş Değeri: int, en sonda bulunan hamle
+    // Amaç:	şu anki durumdan oluşabilecek diğer durumlar hesaplanıyor
+    // maksimum değere sahip olan yolun parent nodu dönüyor
+    // -------------------------------------------------------------------
+    public int maxValue(Node state, int alpha, int beta)
+    {
+        //oyun bittiğinde aramadan çık
+        if (state.board.Status > 2)
+            return state.evalFunc;
+
+        //arama derinliği sınırına ulaşınca dur
+        if (state.nodeDepth == searchDepth)
+            return state.evalFunc;
+
+        //değişken
+        int value = -10000;
+
+        //statei genişlet ve state dizisini getir
+        Queue<Node> nodesFromExpansion = new LinkedList<Node>();
+        nodesFromExpansion = expandState(state);
+
+        //genişletilmiş durumlardaki nodeların değerine bak
+        while (nodesFromExpansion.size() != 0)
+        {
+            // yapılacak hamle oyuncuyu tekrar hamle yapmasını sağlıyorsa
+            // tekrar oynayacakmış gibi hesapla
+            if (state.board.Status == nodesFromExpansion.peek().board.Status)
+            {
+                //eğer bulunan değer şimdikinden büyükse değiştir
+                int utility = maxValue(nodesFromExpansion.peek(), alpha, beta);
+                if (value < utility)
+                {
+                    value = utility;
+                }
+            }
+
+            //diğer oyuncunun oyununu hesapla
+            else
+            {
+                //eğer bulunan değer şimdikinden büyükse değiştir
+                int utility = minValue(nodesFromExpansion.peek(), alpha, beta);
+                if (value < utility)
+                {
+                    value = utility;
+                }
+            }
+
+            //alpha-beta prunning
+            if (value >= beta)
+                return value;
+            if (value > alpha)
+                alpha = value;
+
+            //nodeu sıradan çıkar
+            nodesFromExpansion.poll();
+        }
+
+        //şimdiki nodeu gönder
+        return value;
+    }
+    
+ // -------------------------------------------------------------------
+    // Fonksiyonu: minValue
+    // Değişkenleri: Node state, oyunun şu andaki durumu
+    // Dönüş Değeri: int, her durumun değeri
+    // Amaç:	şu anki durumdan oluşabilecek diğer durumlar hesaplanıyor
+    // minimum değere sahip olan yolun parent nodu dönüyor
+    // -------------------------------------------------------------------
+    public int minValue(Node state, int alpha, int beta)
+    {
+        //oyun bittiğinde aramadan çık
+        if (state.board.Status > 2)
+            return state.evalFunc;
+
+        //arama derinliği sınırına ulaşınca dur
+        if (state.nodeDepth == searchDepth)
+            return state.evalFunc;
+
+        //değişken
+        int value = 10000;
+
+        //statei genişlet ve state dizisini getir
+        Queue<Node> nodesFromExpansion = new LinkedList<Node>();
+        nodesFromExpansion = expandState(state);
+
+        //genişletilmiş durumlardaki nodeların değerine bak
+        while (nodesFromExpansion.size() != 0)
+        {
+
+            // yapılacak hamle oyuncuyu tekrar hamle yapmasını sağlıyorsa
+            // tekrar oynayacakmış gibi hesapla
+            if (state.board.Status == nodesFromExpansion.peek().board.Status)
+            {
+                //eğer bulunan değer şimdikinden küçükse değiştir
+                int utility = minValue(nodesFromExpansion.peek(), alpha, beta);
+                if (value > utility)
+                {
+                    value = utility;
+                }
+            }
+
+            //diğer oyuncunun oyununu hesapla
+            else
+            {
+                //eğer bulunan değer şimdikinden küçükse değiştir
+                int utility = maxValue(nodesFromExpansion.peek(), alpha, beta);
+                if (value > utility)
+                {
+                    value = utility;
+                }
+            }
+
+            //alpha-beta prunning
+            if (value <= alpha)
+                return value;
+            if (value < beta)
+                beta = value;
+
+            //nodeu sıradan çıkar
+            nodesFromExpansion.poll();
+        }
+
+        //şimdiki nodeu gönder
+        return value;
+    }
+    
+ // -------------------------------------------------------------------
+    // Fonksiyonu: expandState
+    // Değişkenleri: Node expandMe, kullanıcının hareketleriyle genişleyecek olan ilk parent node
+    // Dönüş Değeri: std::queue<Node>, child node dizisi
+    // Amaç: parent nodeun genişletilmesiyle oluşacak child nodelar
+    // -------------------------------------------------------------------
+    public Queue<Node> expandState(Node expandMe)
+    {
+        //genişletilmiş nodeların tutulacağı yer
+        Queue<Node> nodeQueue = new LinkedList<Node>();
+
+        int[] possibleBins = new int[CBoard.holes];	//hareket edilebilecek geçerli çukurların numarası
+        int numPossibleMoves = 0;	//hareket edilebilecek çukurların sayısı
+
+        //kimin sırası olduğuna karar ver
+        switch (expandMe.board.Status)
+        {
+            // Player1in sırası
+            case 1:
+                {
+                    //hareket edebileceği geçerli çukurlar
+                    for (int i = 0; i < CBoard.holes; i++)
+                    {
+                        //eğer bir çukur içinde taş varsa bunları array içinde tut ve yeni geçerli çukuru bul
+                        if (expandMe.board.gameBoard[i] > 0)
+                        {
+                            possibleBins[numPossibleMoves] = i + 1;
+                            numPossibleMoves++;
+                        }
+                    }
+
+                    // expandMe den oluşabilecek bütün geçerli nodeları bul
+                    for (int j = 0; j < numPossibleMoves; j++)
+                    {
+                        //tempBoard oluştur ve şu anki oyun durumunu yedekle
+                        CBoard tempBoard = new CBoard();
+                        expandMe.board.MakeCopyIn(tempBoard);
+
+                        //tempNode oluştur ve şu anki nodeu yedekle
+                        //CBoard.Node tempNode = new CBoard().new Node();
+                        Node tempNode = new Node();
+                        
+                        //hamle yap
+                        tempBoard.MakeMove(possibleBins[j]);
+
+                        //hamlenin sonucunu sakla
+                        tempBoard.MakeCopyIn(tempNode.board);
+
+                        // heuristic fonksiyonlara göre nod değeri hesapla 
+                        tempNode.evalFunc = getTotalUtility(tempBoard);
+
+                        tempNode.nodeDepth = expandMe.nodeDepth + 1;
+                        tempNode.minimaxMove = possibleBins[j];
+
+                        //nodeu sıraya koy
+                        nodeQueue.add(tempNode);
+                    }
+                    break;
+                }
+
+            // Player2nin sırası
+            case 2:
+                {
+                    //hareket edebileceği geçerli çukurlar
+                    for (int i = 0; i < CBoard.holes; i++)
+                    {
+                        //eğer bir çukur içinde taş varsa bunları array içinde tut ve yeni geçerli çukuru bul
+                        if (expandMe.board.gameBoard[i + (CBoard.holes + 1)] > 0)
+                        {
+                            possibleBins[numPossibleMoves] = i + 1;
+                            numPossibleMoves++;
+                        }
+                    }
+
+                    // expandMe den oluşabilecek bütün geçerli nodeları bul
+                    for (int j = 0; j < numPossibleMoves; j++)
+                    {
+                        //tempBoard oluştur ve şu anki oyun durumunu yedekle
+                        CBoard tempBoard = new CBoard();
+                        expandMe.board.MakeCopyIn(tempBoard);
+
+                        //tempNode oluştur ve şu anki nodeu yedekle
+                        //Node tempNode = new Node();
+                        //CBoard.Node tempNode = new CBoard().new Node();
+                        Node tempNode = new Node();
+                        //hamle yap
+                        tempBoard.MakeMove(possibleBins[j]);
+
+                        //hamlenin sonucunu sakla
+                        tempBoard.MakeCopyIn(tempNode.board);
+
+                        // heuristic fonksiyonlara göre nod değeri hesapla 
+                        tempNode.evalFunc = getTotalUtility(tempBoard);
+
+                        tempNode.nodeDepth = expandMe.nodeDepth + 1;
+                        tempNode.minimaxMove = possibleBins[j];
+
+                        //nodeu sıraya koy
+                        nodeQueue.add(tempNode);
+                    }
+                    break;
+                }
+
+            default:
+                //oyun bitti
+                break;
+        }
+
+        //hareket edilecek çukurun numarasını gönder
+        return nodeQueue;
+    }
+}
