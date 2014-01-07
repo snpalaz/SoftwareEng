@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/gameoptions_logo"
+        android:minHeight="64dip"
+        android:minWidth="220dip"
+        android:src="@drawable/logo_gameoptions" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView1"
+        android:src="@drawable/txt_difficulty_level" />
+
+    <ToggleButton
+        android:id="@+id/toggleEasyOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView2"
+        android:background="@drawable/toggle_easy_onoff_states"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android1:id="@+id/toggleMediumOnOff"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_below="@+id/toggleEasyOnOff"
+        android:background="@drawable/toggle_medium_onoff_states"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android1:id="@+id/toggleHardOnOff"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_below="@+id/toggleMediumOnOff"
+        android1:background="@drawable/toggle_hard_onoff_states"
+        android1:textOff=""
+        android1:textOn="" />
+
+    <ImageView
+        android1:id="@+id/imageView3"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignTop="@+id/imageView2"
+        android1:layout_toRightOf="@+id/imageView2"
+        android1:src="@drawable/txt_stones_per_bin" />
+
+    <ToggleButton
+        android1:id="@+id/toggleStoneFour"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignLeft="@+id/imageView3"
+        android1:layout_below="@+id/imageView3"
+        android1:layout_marginLeft="42dp"
+        android1:background="@drawable/toggle_four_onoff_states"
+        android1:maxHeight="36dp"
+        android1:maxWidth="72dp"
+        android1:minHeight="36dp"
+        android1:minWidth="72dip"
+        android1:textOff=""
+        android1:textOn="" />
+
+    <ToggleButton
+        android1:id="@+id/toggleStoneSix"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignLeft="@+id/toggleStoneFive"
+        android1:layout_below="@+id/toggleStoneFive"
+        android1:layout_marginTop="10dp"
+        android1:background="@drawable/toggle_six_onoff_states"
+        android1:maxHeight="36dp"
+        android1:maxWidth="72dp"
+        android1:minHeight="36dp"
+        android1:minWidth="72dip" 
+        android1:textOff=""
+        android1:textOn=""/>
+
+    <Button
+        android1:id="@+id/btnHomeInGameOptions"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignLeft="@+id/toggleStoneSix"
+        android1:layout_alignParentBottom="true"
+        android1:background="@drawable/btn_home_states"
+        android1:onClick="startActivityFirstScreen" />
+
+    <ToggleButton
+        android1:id="@+id/toggleVolume"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentBottom="true"
+        android1:layout_toRightOf="@+id/btnHomeInGameOptions"
+        android1:background="@drawable/btn_vol_onoff_states" />
+
+    <ToggleButton
+        android1:id="@+id/toggleStoneFive"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignLeft="@+id/toggleStoneFour"
+        android1:layout_below="@+id/toggleStoneFour"
+        android1:layout_marginTop="10dp"
+        android1:background="@drawable/toggle_five_onoff_states"
+        android1:maxHeight="36dp"
+        android1:maxWidth="72dp"
+        android1:minHeight="36dp"
+        android1:minWidth="72dip" 
+        android1:textOff=""
+        android1:textOn=""/>
+
+</RelativeLayout>

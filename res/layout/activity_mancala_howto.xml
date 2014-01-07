@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/background">
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                
+                android:text="Günümüzde en başarılı ilköğretim okulu, lise giriş sınavında en yüksek başarıyı tutturan ilköğretim okulu ve en başarılı lise, üniversite giriş sınavında en yüksek başarıyı tutturan lise olarak görülmeye devam etmektedir. Eğitim sisteminde süregelen bazı aksamalar, ne  yazık ki, günümüzün, “başarılı okul” tanımını öğrencilerin lise ve üniversite giriş sınavlarındaki başarılarıyla kısıtlamıştır. Oysa ki, bu alanda yapılan araştırmalar, okulda alınan iyi notların hayat başarısını garantilemediği gerçeğini tekrar tekrar ortaya koymakta ve salt zekanın (IQ) günlük hayattaki başarıya katkısının %10’dan fazla olmadığını göstermektedir. Bu bakımdan, eşit IQ düzeyine sahip iki kişiden biri hayatta ilerleme kaydetmişken, diğerinin neden aynı başarı düzeyini yakalayamadığını anlayabilmek için bu kişilerin Duygusal Zeka (EQ) yeterliklerinin de göz önünde bulundurulması gerekir. Çünkü, genel olarak Duygusal Zeka (EQ), sahip olduğumuz her türlü bilgi ve beceriyi (bilişsel, sosyal, duygusal, vb.) hem kendi hayatımızda, hem de çevremizdeki insanlarla olan ilişkilerimizde ne kadar etkin kullanabildiğimizle ilgilidir. Dahası, IQ seviyesiyle bağdaştırılan sözel ve sayısal bilgileri öğrenme becerilerinde olduğu gibi, EQ başlığı altında yer alan duygusal ve sosyal beceriler de öğrenilerek kazanılabilir ve geliştirilebilir. Dolayısıyla, inanıyoruz ki, asıl hedef olan hayat başarısına ulaşabilmek için, öncelikle okullarımızdaki “başarı” tanımının yeniden gözden geçirilmesi ve bu tanımdaki boşluğun EQ bilgileri ışığında doldurulması gerekmektedir." />
+            
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
